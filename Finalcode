@@ -1,0 +1,166 @@
+# In[2]:
+
+
+import pandas as pd
+
+import matplotlib.pyplot as plt
+get_ipython().magic('matplotlib inline')
+
+
+# In[3]:
+
+
+import os
+
+
+# In[4]:
+
+
+df = pd.read_csv('heightweight.csv')
+
+
+# In[5]:
+
+
+df
+
+
+# In[6]:
+
+
+df.head()
+
+
+# In[7]:
+
+
+df.tail()
+
+
+# In[8]:
+
+
+df.count()
+
+
+# In[9]:
+
+
+df['ageYear'].count()
+
+
+# In[10]:
+
+
+#Initial Exploration
+
+
+# In[11]:
+
+
+df.info()
+
+
+# In[12]:
+
+
+df['gender'].nunique()
+
+
+# In[13]:
+
+
+df['gender'].unique()
+
+
+# In[14]:
+
+
+df['gender'].value_counts()
+
+
+# In[15]:
+
+
+df.describe()
+
+
+# In[16]:
+
+
+#Graph
+
+
+# In[17]:
+
+
+plt.hist(df.HeightIn)
+
+
+# In[18]:
+
+
+plt.hist(df.WeightLB)
+
+
+# In[19]:
+
+
+import seaborn as sns
+
+
+# In[20]:
+
+
+plt.scatter(df.WeightLB, df.HeightIn)
+
+
+# In[21]:
+
+
+#model
+
+
+# In[22]:
+
+
+from scipy import stats
+
+
+# In[23]:
+
+
+estheight = stats.linregress(df.WeightLB, df.HeightIn)
+estheight
+
+
+# In[24]:
+
+
+estheight
+
+
+# In[25]:
+
+
+#Deployment
+
+
+# In[26]:
+
+
+def predict(weight):
+    return estheight.slope * weight + estheight.intercept
+
+
+# In[29]:
+
+
+x = input("Enter Weight = ")
+print("Estimated height = "),(predict(int(x))/12)
+
+
+# In[31]:
+
+
+predict(190)/12
